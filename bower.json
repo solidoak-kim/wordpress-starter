@@ -1,0 +1,9 @@
+{
+	"name" : "NAME",
+	"version": "0.0.1",
+	"description": "Description for project",
+	"dependencies": {},
+	"devDependencies": {},
+	"authors": ["rGenerators"],
+	"license": "MIT"
+}

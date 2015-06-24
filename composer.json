@@ -1,0 +1,16 @@
+{
+  "repositories": [
+    {
+      "type": "composer",
+      "url": "http://wpackagist.org"
+    }
+  ],
+  "require": {
+    "johnpbloch/wordpress": "4.2",
+    "fancyguy/wordpress-monolog": "dev-master"
+  },
+  "extra": {
+    "wordpress-install-dir": "wp"
+  }
+}
+

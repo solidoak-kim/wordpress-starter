@@ -1,4 +1,4 @@
-e strict';
+'use strict';
 
 module.exports = function(grunt){
 

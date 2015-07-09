@@ -1,2 +1,6 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
+root/wp
+root/wp-content/plugins
+root/wp-config.sample
+root/wp-config.php

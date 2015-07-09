@@ -6,8 +6,7 @@
     }
   ],
   "require": {
-    "johnpbloch/wordpress": "4.2",
-    "fancyguy/wordpress-monolog": "dev-master"
+    "johnpbloch/wordpress": "4.2"
   },
   "extra": {
     "wordpress-install-dir": "wp"

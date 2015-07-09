@@ -15,7 +15,9 @@ if ( ! defined( 'debug_mode' ) ) {
 
 
 function rg( $arr ) {
-	echo "<pre>"; print_r( $arr ); echo "</pre>";
+	echo "<pre>";
+	print_r( $arr );
+	echo "</pre>";
 }
 
 function rg_rgnrtr_setup() {
@@ -32,9 +34,9 @@ function rg_rgnrtr_setup() {
 
 	if ( ! is_admin() ) {
 		// Load in main theme css (application.css) for non wp-admin pages
-		wp_enqueue_style( 'application', get_template_directory_uri() . '/styles/css/application.css' );
+		wp_enqueue_style( 'main', get_template_directory_uri() . '/stylesheets/main.css' );
 	}
-	if ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ) {
+	if (defined('LOCAL_DEV_MODE')) {
 		wp_register_script( 'livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true );
 		wp_enqueue_script( 'livereload' );
 	}
@@ -67,6 +69,7 @@ function rg_add_rewrite_rules( $aRules ) {
 
 	return $aRules;
 }
+
 /**
  * SVG mime type.
  */
@@ -242,7 +245,8 @@ function _rgnrtrLoginLogo() {
         }
     </style>';
 }
-add_action('login_head', '_rgnrtrLoginLogo');
+
+add_action( 'login_head', '_rgnrtrLoginLogo' );
 
 /**
  * Add site logo to WP admin header bar.
@@ -261,13 +265,14 @@ function _rgnrtrAdminBarLogo() {
 		'meta'   => false
 	) );
 }
+
 add_action( 'admin_bar_menu', '_rgnrtrAdminBarLogo', 0 );
 add_action( 'wp_before_admin_bar_render', '_rgnrtrAdminBarLogo', 0 );
 
 
 /////////////////////////////// SEARCH FORM ///////////////////////////////
 function _rgnrtrSearchForm( $form ) {
-	$form   = '
+	$form = '
     <div class="label">' . __( 'Start typing to search:' ) . '</div>
     <form role="search" method="get" id="searchform" class="searchform flex" action="' . home_url( '/' ) . '" >
 		<input type="text" value="' . get_search_query() . '" name="s" id="s" />
@@ -277,6 +282,7 @@ function _rgnrtrSearchForm( $form ) {
             </label>
         </div>
 	</form>';
+
 	return $form;
 }
 
@@ -312,6 +318,7 @@ add_action( 'wp_enqueue_scripts', 'rg_scripts_styles' );
  */
 function _rgnrtrencodeURIComponent( $str ) {
 	$revert = array( '%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')' );
+
 	return strtr( rawurlencode( $str ), $revert );
 }
 

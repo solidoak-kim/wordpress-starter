@@ -1,30 +1,24 @@
 <?php
 /**
- * Popmarket functions and definitions.
- * Popmarket only works in WordPress 3.6 or later.
+ * rgnrtr functions and definitions.
+ * rgnrtr only works in WordPress 3.6 or later.
  */
-if ( version_compare( $GLOBALS['wp_version'], '3.6-alpha', '<' ) ) {
-	require get_template_directory() . '/inc/back-compat.php';
-}
-
-if ( ! defined( 'RG_POPMARKET_LOCALE' ) ) {
-	define( 'RG_POPMARKET_LOCALE', '' );
-}
-
 $svgs = array();
+
+if ( ! defined( 'RG_RGNRTR_LOCALE' ) ) {
+	define( 'RG_RGNRTR_LOCALE', '' );
+}
 
 if ( ! defined( 'debug_mode' ) ) {
 	define( 'debug_mode', true );
 }
 
 
-function pop( $arr ) {
-	echo "<pre>";
-	print_r( $arr );
-	echo "</pre>";
+function rg( $arr ) {
+	echo "<pre>"; print_r( $arr ); echo "</pre>";
 }
 
-function rg_popmarket_setup() {
+function rg_rgnrtr_setup() {
 	add_theme_support( 'automatic-feed-links' );
 	add_theme_support( 'html5', array( 'search-form', 'comment-form', 'comment-list' ) );
 
@@ -34,34 +28,25 @@ function rg_popmarket_setup() {
 	) );
 
 	add_theme_support( 'post-thumbnails' );
-	add_image_size( 'album-cover', 500, 500, array( 'top', 'center' ) );
-	add_image_size( 'default-thumb', 200, 200, array( 'top', 'center' ) );
-
-	add_action( 'body_class', '_popmarketIOSClass' );
-
+	add_image_size( 'default-thumb', 400, 400, array( 'top', 'center' ) );
 
 	if ( ! is_admin() ) {
 		// Load in main theme css (application.css) for non wp-admin pages
 		wp_enqueue_style( 'application', get_template_directory_uri() . '/styles/css/application.css' );
-
-
-
 	}
-
-
-
 	if ( in_array( $_SERVER['REMOTE_ADDR'], array( '127.0.0.1', '::1' ) ) ) {
 		wp_register_script( 'livereload', 'http://localhost:35729/livereload.js?snipver=1', null, false, true );
 		wp_enqueue_script( 'livereload' );
 	}
-
+    
+    add_action( 'body_class', '_rgnrtrIOSClass' );
 
 }
 
-add_action( 'after_setup_theme', 'rg_popmarket_setup' );
+add_action( 'after_setup_theme', 'rg_rgnrtr_setup' );
 
 
-include( get_template_directory() . '/inc/rg-m2store/rg-m2-plugin.php' );
+//include( get_template_directory() . '/inc/rg-m2store/rg-m2-plugin.php' );
 require_once( get_template_directory() . '/inc/metaboxes/meta_box.php' );
 
 
@@ -82,7 +67,9 @@ function rg_add_rewrite_rules( $aRules ) {
 
 	return $aRules;
 }
-
+/**
+ * SVG mime type.
+ */
 function _mimeTypes( $mimes ) {
 	$mimes['svg'] = 'image/svg+xml';
 
@@ -142,7 +129,7 @@ function _arrayMath( $array ) {
 /**
  * Gets the tag slug / name.
  */
-function _popmarketGetNameSlug( $tags, $tagName = null, $slug = null, $term = null ) {
+function _rgnrtrGetNameSlug( $tags, $tagName = null, $slug = null, $term = null ) {
 	if ( ! empty( $tags ) && is_array( $tags ) && $term != null ):
 		foreach ( $tags as $tag ):
 			if ( strstr( $tag, $term ) !== false ) {
@@ -160,7 +147,7 @@ function _popmarketGetNameSlug( $tags, $tagName = null, $slug = null, $term = nu
 /**
  * Mobile detection.
  */
-function _historyMobile() {
+function _rgnrtrMobile() {
 	static $is_mobile;
 
 	if ( isset( $is_mobile ) ) {
@@ -188,7 +175,7 @@ function _historyMobile() {
 /**
  * Adds mobile class.
  */
-function _popmarketIOSClass( $classes ) {
+function _rgnrtrIOSClass( $classes ) {
 	if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Mobile' ) !== false
 	     || strpos( $_SERVER['HTTP_USER_AGENT'], 'Android' ) !== false
 	     || strpos( $_SERVER['HTTP_USER_AGENT'], 'Silk/' ) !== false
@@ -207,7 +194,7 @@ function _popmarketIOSClass( $classes ) {
 /**
  * String replace function.
  */
-function _popmarketString( $string, $case, $txt = null ) {
+function _rgnrtrString( $string, $case, $txt = null ) {
 	if ( ! empty( $string ) && ! empty( $case ) ):
 		switch ( $case ):
 			case 'lowercase':
@@ -244,24 +231,23 @@ function _popmarketString( $string, $case, $txt = null ) {
 /**
  * Adds login logo.
  */
-function _popmarketLoginLogo() {
+function _rgnrtrLoginLogo() {
 	echo '<style type="text/css">
         .login h1 a {
-          width: 200px !important;
-          height: 150px !important;
+          width: 100px !important;
+          height: 100px !important;
           margin: 0 auto;
-          background-image:url(' . get_bloginfo( 'template_directory' ) . '/images/svg/history-logo.svg) !important;
+          background-image:url(' . get_bloginfo( 'template_directory' ) . '/images/rgenerator.png) !important;
           background-size: contain;
         }
     </style>';
 }
-
-//add_action('login_head', '_popmarketLoginLogo');
+add_action('login_head', '_rgnrtrLoginLogo');
 
 /**
  * Add site logo to WP admin header bar.
  */
-function _popmarketAdminBarLogo() {
+function _rgnrtrAdminBarLogo() {
 	global $wp_admin_bar;
 
 	// Remove wp logo admin menu_id
@@ -270,33 +256,27 @@ function _popmarketAdminBarLogo() {
 	$wp_admin_bar->add_menu( array(
 		'parent' => false, // use 'false' for a root menu, or pass the ID of the parent menu
 		'id'     => 'rg_logo', // link ID, defaults to a sanitized title value
-		'title'  => '<img style="margin-top:4px;width: 25px;height: 25px;" src="' . get_template_directory_uri() . '/images/menu_icon.png" />',
+		'title'  => '<img style="margin-top:4px;width: 16px;height: 16px;" src="' . get_template_directory_uri() . '/images/wp_menu_icon.png" />',
 		'href'   => false,
 		'meta'   => false
 	) );
 }
-
-//add_action( 'admin_bar_menu', '_popmarketAdminBarLogo', 0 );
-//add_action( 'wp_before_admin_bar_render', '_popmarketAdminBarLogo', 0 );
+add_action( 'admin_bar_menu', '_rgnrtrAdminBarLogo', 0 );
+add_action( 'wp_before_admin_bar_render', '_rgnrtrAdminBarLogo', 0 );
 
 
 /////////////////////////////// SEARCH FORM ///////////////////////////////
-function _historySearchForm( $form ) {
-	global $svgs;
-	$search = $svgs['search'];
+function _rgnrtrSearchForm( $form ) {
 	$form   = '
     <div class="label">' . __( 'Start typing to search:' ) . '</div>
     <form role="search" method="get" id="searchform" class="searchform flex" action="' . home_url( '/' ) . '" >
 		<input type="text" value="' . get_search_query() . '" name="s" id="s" />
         <div class="submit-btn">
             <label>
-                <span>' . $search . '</span>
-                Enter
                 <input type="submit" id="searchsubmit" value="' . esc_attr__( 'Enter' ) . '" />
             </label>
         </div>
 	</form>';
-
 	return $form;
 }
 
@@ -309,7 +289,7 @@ function rg_scripts_styles() {
 	$_svgs = siteSvgs::_getSVGInstance();
 	global $svgs;
 
-	// Loads JavaScript file with functionality specific to popmarket.
+	// Loads JavaScript file with functionality specific to rgnrtr.
 	wp_enqueue_script( 'plugins', get_template_directory_uri() . '/js/plugins.js', array( 'jquery' ), '1.0.1', true );
 	wp_enqueue_script( 'rg-script', get_template_directory_uri() . '/js/scripts.js', array( 'jquery' ), true );
 	wp_localize_script( 'rg-scripts', 'localize', array(
@@ -326,30 +306,17 @@ function rg_scripts_styles() {
 
 add_action( 'wp_enqueue_scripts', 'rg_scripts_styles' );
 
-/**
- * Adds mobile class.
- */
-function _popmarketIOS( $classes ) {
-	if ( strstr( $_SERVER['HTTP_USER_AGENT'], 'iPad' ) || strstr( $_SERVER['HTTP_USER_AGENT'], 'iPhone' ) ) {
-		$classes[] = 'mobile_ios';
-	}
-
-	return $classes;
-}
 
 /**
  * URL Encoder.
  */
-if ( ! function_exists( 'rg_encodeURIComponent' ) ) :
-	function _popmarketencodeURIComponent( $str ) {
-		$revert = array( '%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')' );
-
-		return strtr( rawurlencode( $str ), $revert );
-	}
-endif;
+function _rgnrtrencodeURIComponent( $str ) {
+	$revert = array( '%21' => '!', '%2A' => '*', '%27' => "'", '%28' => '(', '%29' => ')' );
+	return strtr( rawurlencode( $str ), $revert );
+}
 
 
-function _popmarketGetImageURL( $postID ) {
+function _rgnrtrGetImageURL( $postID ) {
 	$attachment = wp_get_attachment_image_src( get_post_thumbnail_id( $postID ), 'full-size' );
 
 	if ( isset( $attachment ) ) {
@@ -363,8 +330,8 @@ function _popmarketGetImageURL( $postID ) {
 /**
  * The Excerpt.
  */
-if ( ! function_exists( '_popmarketExcerpt' ) ) :
-	function _popmarketExcerpt( $limit, $morelink = false, $moretext = 'read more', $striptags = null ) {
+if ( ! function_exists( '_rgnrtrExcerpt' ) ) :
+	function _rgnrtrExcerpt( $limit, $morelink = false, $moretext = 'read more', $striptags = null ) {
 		if ( $morelink == true ) {
 			$morelink = '<a href="' . esc_url( get_permalink() ) . '" title="' . get_the_title() . '" class="readmore">' . $moretext . '</a>';
 		} else {
@@ -391,10 +358,10 @@ endif;
 /**
  * Title Limit.
  *
- * rg_limit_title($post->post_title, 25);
+ * _rgnrtrTitle($post->post_title, 25);
  */
-if ( ! function_exists( 'rg_limit_title' ) ) :
-	function rg_limit_title( $title, $limit ) {
+if ( ! function_exists( '_rgnrtrTitle' ) ) :
+	function _rgnrtrTitle( $title, $limit ) {
 		if ( strlen( $title ) > $limit ) {
 			$t = substr( the_title( $before = '', $after = '', false ), 0, $limit ) . '...';
 		} else {
@@ -409,8 +376,8 @@ endif;
 /**
  * Displays the gallery.
  */
-if ( ! function_exists( 'rg_gallery' ) ) :
-	function rg_gallery( $limit, $size = 'full-size', $last_class = 3 ) {
+if ( ! function_exists( '_rgnrtrGallery' ) ) :
+	function _rgnrtrGallery( $limit, $size = 'full-size', $last_class = 3 ) {
 		global $post;
 		$regex_pattern = get_shortcode_regex();
 		if ( preg_match_all( '/' . $regex_pattern . '/s', $post->post_content, $matches ) && array_key_exists( 2, $matches ) && in_array( 'gallery', $matches[2] ) ):
@@ -467,7 +434,7 @@ endif;
 /**
  * Enque fonts from Google Fonts.
  */
-function rg_fonts_url() {
+function _rgnrtrFonts() {
 	$fonts_url = '';
 
 	$open_sans = _x( 'on', 'Open Sans font: on or off', 'rg' );
@@ -494,8 +461,8 @@ function rg_fonts_url() {
 	return $fonts_url;
 }
 
-function rg_mce_css( $mce_css ) {
-	$font_url = rg_fonts_url();
+function _rgnrtrMCECSS( $mce_css ) {
+	$font_url = _rgnrtrFonts();
 	if ( empty( $font_url ) ) {
 		return $mce_css;
 	}
@@ -507,13 +474,13 @@ function rg_mce_css( $mce_css ) {
 	return $mce_css;
 }
 
-add_filter( 'mce_css', 'rg_mce_css' );
+add_filter( 'mce_css', '_rgnrtrMCECSS' );
 
 
 /**
  * WP title.
  */
-function rg_wp_title() {
+function _rgnrtrWPTitle() {
 	global $page, $paged;
 
 	bloginfo( 'name' );
@@ -533,7 +500,7 @@ function rg_wp_title() {
 /**
  * Registers the widget areas.
  */
-function rg_widgets_init() {
+function _rgnrtrWidgetsInit() {
 	register_sidebar( array(
 		'name'          => __( 'Main Widget Area', 'rg' ),
 		'id'            => 'sidebar',
@@ -545,14 +512,14 @@ function rg_widgets_init() {
 	) );
 }
 
-add_action( 'widgets_init', 'rg_widgets_init' );
+add_action( 'widgets_init', '_rgnrtrWidgetsInit' );
 
 
 /**
  * Displays the thumbnail from YouTube & Vimeo videos.
  */
-if ( ! function_exists( 'rg_get_video_img' ) ):
-	function rg_get_video_img( $url, $size = 'hqdefault' ) {
+if ( ! function_exists( '_rgnrtrGetVideoImg' ) ):
+	function _rgnrtrGetVideoImg( $url, $size = 'hqdefault' ) {
 		$image_src = parse_url( $url );
 
 		if ( $image_src['host'] == 'www.vimeo.com' || $image_src['host'] == 'vimeo.com' || $image_src['host'] == 'player.vimeo.com' ) {
@@ -597,8 +564,8 @@ endif;
 /**
  * Displays the video from YouTube or Vimeo.
  */
-if ( ! function_exists( 'rg_get_video_url' ) ):
-	function rg_get_video_url( $url ) {
+if ( ! function_exists( '_rgnrtrGetVideo' ) ):
+	function _rgnrtrGetVideo( $url ) {
 		$url_src = parse_url( $url );
 		$expires = 0;
 
@@ -645,8 +612,8 @@ endif;
 /**
  * Displays navigation.
  */
-if ( ! function_exists( 'rg_number_pagination' ) ) :
-	function rg_number_pagination( $pages = '', $range = 1 ) {
+if ( ! function_exists( '_rgnrtrPagination' ) ) :
+	function _rgnrtrPagination( $pages = '', $range = 1 ) {
 		$showitems = ( $range * 2 ) + 1;
 		global $paged;
 		if ( empty( $paged ) ) {
@@ -705,8 +672,8 @@ endif;
 /**
  * Displays navigation to next/previous set of posts when applicable.
  */
-if ( ! function_exists( 'rg_paging_nav' ) ) :
-	function rg_paging_nav() {
+if ( ! function_exists( '_rgnrtrPagingNav' ) ) :
+	function _rgnrtrPagingNav() {
 		global $wp_query;
 
 		$prev_post = get_previous_post();
@@ -736,74 +703,10 @@ if ( ! function_exists( 'rg_paging_nav' ) ) :
 	}
 endif;
 
-
-/**
- * Prints HTML with meta information for current post: categories, tags, permalink, author, and date.
- */
-if ( ! function_exists( 'rg_entry_meta' ) ) :
-	function rg_entry_meta() {
-		if ( is_sticky() && is_home() && ! is_paged() ) {
-			echo '<span class="featured-post">' . __( 'Sticky', 'rg' ) . '</span>';
-		}
-
-		if ( ! has_post_format( 'link' ) && 'post' == get_post_type() ) {
-			rg_entry_date();
-		}
-
-		// Translators: used between list items, there is a space after the comma.
-		$categories_list = get_the_category_list( __( ', ', 'rg' ) );
-		if ( $categories_list ) {
-			echo '<span class="categories-links">' . $categories_list . '</span>';
-		}
-
-		// Translators: used between list items, there is a space after the comma.
-		$tag_list = get_the_tag_list( '', __( ', ', 'rg' ) );
-		if ( $tag_list ) {
-			echo '<span class="tags-links">' . $tag_list . '</span>';
-		}
-
-		// Post author
-		if ( 'post' == get_post_type() ) {
-			printf( '<span class="author vcard"><a class="url fn n" href="%1$s" title="%2$s" rel="author">%3$s</a></span>',
-				esc_url( get_author_posts_url( get_the_author_meta( 'ID' ) ) ),
-				esc_attr( sprintf( __( 'View all posts by %s', 'rg' ), get_the_author() ) ),
-				get_the_author()
-			);
-		}
-	}
-endif;
-
-
-/**
- * Prints HTML with date information for current post.
- */
-if ( ! function_exists( 'rg_entry_date' ) ) :
-	function rg_entry_date( $echo = true ) {
-		if ( has_post_format( array( 'chat', 'status' ) ) ) {
-			$format_prefix = _x( '%1$s on %2$s', '1: post format name. 2: date', 'rg' );
-		} else {
-			$format_prefix = '%2$s';
-		}
-
-		$date = sprintf( '<span class="date"><a href="%1$s" title="%2$s" rel="bookmark"><time class="entry-date" datetime="%3$s">%4$s</time></a></span>',
-			esc_url( get_permalink() ),
-			esc_attr( sprintf( __( 'Permalink to %s', 'rg' ), the_title_attribute( 'echo=0' ) ) ),
-			esc_attr( get_the_date( 'c' ) ),
-			esc_html( sprintf( $format_prefix, get_post_format_string( get_post_format() ), get_the_date() ) )
-		);
-
-		if ( $echo ) {
-			echo $date;
-		}
-
-		return $date;
-	}
-endif;
-
 /**
  * Returns the URL from the post.
  */
-function rg_get_post_url() {
+function _rgnrtrGetPostURL() {
 	$content = get_the_content();
 	$has_url = get_url_in_content( $content );
 

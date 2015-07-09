@@ -33,41 +33,9 @@ get_header(); ?>
    						$metadata['width'],
    						$metadata['height']
    					);
-
-   					edit_post_link( __( 'Edit', 'twentythirteen' ), '<span class="edit-link">', '</span>' );
    				?>
    			</div><!-- .entry-meta -->
    		</header><!-- .entry-header -->
-
-   		<div class="entry-content">
-   			<nav id="image-navigation" class="navigation image-navigation" role="navigation">
-   				<span class="nav-previous"><?php previous_image_link( false, __( '<span class="meta-nav">&larr;</span> Previous', 'twentythirteen' ) ); ?></span>
-   				<span class="nav-next"><?php next_image_link( false, __( 'Next <span class="meta-nav">&rarr;</span>', 'twentythirteen' ) ); ?></span>
-   			</nav><!-- #image-navigation -->
-
-   			<div class="entry-attachment">
-   				<div class="attachment">
-   					<?php rg_the_attached_image(); ?>
-
-   					<?php if ( has_excerpt() ) : ?>
-   					<div class="entry-caption">
-   						<?php the_excerpt(); ?>
-   					</div>
-   					<?php endif; ?>
-   				</div><!-- .attachment -->
-   			</div><!-- .entry-attachment -->
-
-   			<?php if ( ! empty( $post->post_content ) ) : ?>
-   			<div class="entry-description">
-   				<?php the_content(); ?>
-   				<?php wp_link_pages( array( 'before' => '<div class="page-links">' . __( 'Pages:', 'twentythirteen' ), 'after' => '</div>' ) ); ?>
-   			</div><!-- .entry-description -->
-   			<?php endif; ?>
-
-   		</div><!-- .entry-content -->
-   	</article><!-- #post -->
-
-   	<?php comments_template(); ?>
 
 </div><!-- .content -->
 

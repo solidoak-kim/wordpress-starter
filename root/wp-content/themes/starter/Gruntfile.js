@@ -10,49 +10,39 @@ module.exports = function(grunt){
         livereload: true
       },
       php: {
-        files: ['**/*.php']
-      },
-      css: {
-        files: ['**/*.css']
+        files: ['./*.php']
       },
       stylus: {
-        files: ['styles/stylus/*.styl'],
+        files: ['./src/stylus/*.styl'],
         tasks: ['stylus:compile']
       },
       gruntfile: {
         files: ['Gruntfile.js']
       },
       typescript: {
-        files: 'scripts/typescript/*.ts',
+        files: './src/typescript/*.ts',
         tasks: ['typescript']
+      },
+      sass: {
+        files: ['./src/sass/*.scss'],
+        tasks: ['compass:dev']
       }
     },
 
     // Compoass Sass compile task
     compass: {
-      dist: {
+      prod: {
         options: {
-          sassDir: 'styles/sass',
-          cssDir: 'styles/css',
+          sassDir: ['src/sass'],
+          cssDir: ['stylesheets'],
           environment: 'production'
         }
       },
       dev: {
         options: {
-          sassDir: 'styles/sass',
-          cssDir: 'styles/css'
-        }
-      }
-    },
-
-    // Stylus compile task
-    stylus: {
-      compile: {
-        options: {
-          paths: ['styles/stylus']
-        },
-        files: {
-          'styles/css/main-stylus.css': 'styles/stylus/main.styl'
+          sassDir: ['src/sass'],
+          cssDir: ['stylesheets'],
+          environment: 'development'
         }
       }
     },
@@ -61,12 +51,10 @@ module.exports = function(grunt){
     typescript: {
       base: {
         src: ['scripts/typescript/*.ts'],
-        dest: 'scripts/js',
+        dest: ['javascripts'],
         options: {
           module: 'commonjs',
-          target: 'ES3',
-          sourceMap: true,
-          removeComments: true,
+          target: 'ES5'
         }
       }
     }
@@ -75,10 +63,11 @@ module.exports = function(grunt){
 
   // Load the required plugins
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-stylus');
+  grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-typescript');
 
-  // Default task(s).
-  grunt.registerTask('dev', ['watch', 'stylus', 'compass:dev']);
+  // Register task(s).
+  grunt.registerTask('dev', [ 'compass:dev', 'typescript', 'watch']);
+  grunt.registerTask('prod', ['compass:prod']);
 
 };

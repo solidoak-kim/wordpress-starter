@@ -1,16 +1,13 @@
-	</div><!-- .container -->
-</div><!-- #main-content -->
+</main>
 
-<div id="footer-block" class="block">
-	<div class="container">
-		<div class="legal">
-			<p>&copy; 2013 RGENERATOR.</p>
-		</div>
-	</div>
+<div id="footer-container" class="footer-container">
+	<footer class="footer-main">
+		<span class="copyright">&copy;<?php echo date("Y"); ?> <a href="http://www.rgenerator.com" target="_blank" title="rGenerator">rGenerator</a></span>
+	</footer>
 </div>
-	
-</div><!-- #master-container -->
 
-	<?php wp_footer(); ?>
+</div>
+<?php wp_footer(); ?>
+
 </body>
 </html>

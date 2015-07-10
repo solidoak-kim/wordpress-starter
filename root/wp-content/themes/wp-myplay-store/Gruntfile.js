@@ -12,19 +12,11 @@ module.exports = function(grunt){
       php: {
         files: ['./*.php']
       },
-      stylus: {
-        files: ['./src/stylus/*.styl'],
-        tasks: ['stylus:compile']
-      },
       gruntfile: {
         files: ['Gruntfile.js']
       },
-      typescript: {
-        files: './src/typescript/*.ts',
-        tasks: ['typescript']
-      },
       sass: {
-        files: ['./src/sass/*.scss'],
+        files: ['src/sass/*.scss'],
         tasks: ['compass:dev']
       }
     },
@@ -48,13 +40,13 @@ module.exports = function(grunt){
     },
 
     // Typescript compile task
-    typescript: {
-      base: {
-        src: ['scripts/typescript/*.ts'],
-        dest: ['javascripts'],
+    ts: {
+      dev: {
+        src: ['src/typescript/*.ts'],
+        out: 'javascripts/main.js',
+        watch: 'src/typescript',
         options: {
-          module: 'commonjs',
-          target: 'ES5'
+          module: 'commonjs'
         }
       }
     }
@@ -64,10 +56,10 @@ module.exports = function(grunt){
   // Load the required plugins
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
-  grunt.loadNpmTasks('grunt-typescript');
+  grunt.loadNpmTasks('grunt-ts');
 
   // Register task(s).
-  grunt.registerTask('dev', [ 'compass:dev', 'typescript', 'watch']);
+  grunt.registerTask('dev', ['watch', 'compass:dev', 'ts:dev']);
   grunt.registerTask('prod', ['compass:prod']);
 
 };

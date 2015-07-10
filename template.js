@@ -27,11 +27,6 @@ exports.template = function(grunt, init, done){
     // Empty folders won't be copied over so make them here
     grunt.file.mkdir('wp');
 
-    // Generate package.json file, used by npm and grunt.
-    //init.writePackageJSON('package.json', {
-    //  name: props.name,
-    //  description: props.description,
-    //  version: props.version,
     //  devDependencies: {
     //    "grunt-contrib-watch": "~v0.6.x",
     //    "grunt-contrib-stylus": "~v0.21.x",

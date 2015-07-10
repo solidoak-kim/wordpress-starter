@@ -296,8 +296,8 @@ function rg_scripts_styles() {
 	global $svgs;
 
 	// Loads JavaScript file with functionality specific to rgnrtr.
-	wp_enqueue_script( 'plugins', get_template_directory_uri() . '/js/plugins.js', array( 'jquery' ), '1.0.1', true );
-	wp_enqueue_script( 'rg-script', get_template_directory_uri() . '/js/scripts.js', array( 'jquery' ), true );
+//	wp_enqueue_script( 'plugins', get_template_directory_uri() . '/js/plugins.js', array( 'jquery' ), '1.0.1', true );
+	wp_enqueue_script( 'rg-script', get_template_directory_uri() . '/javascripts/main.js', array( 'jquery' ), true );
 	wp_localize_script( 'rg-scripts', 'localize', array(
 		'siteURL'   => site_url(),
 		'permalink' => get_bloginfo( 'template_directory' ),
@@ -305,7 +305,7 @@ function rg_scripts_styles() {
 
 	//wp_enqueue_style( 'wp-mediaelement' );
 	wp_enqueue_style( 'rg-style', get_stylesheet_uri(), array() );
-	wp_enqueue_style( 'rg-genericons', get_template_directory_uri() . '/fonts/genericons.css', array(), '3.0.2' );
+//	wp_enqueue_style( 'rg-genericons', get_template_directory_uri() . '/fonts/genericons.css', array(), '3.0.2' );
 
 	wp_style_add_data( 'rg-ie', 'conditional', 'lt IE 9' );
 }

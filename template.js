@@ -1,7 +1,7 @@
 'use strict';
 
 // Basic template description
-exports.description = 'Scaffolds a new WordPress starter theme with GruntJS, Compass and Typescript';
+exports.description = 'Scaffolds a new M2 WordPress starter theme with GruntJS, Compass and Typescript';
 
 // Any existing file or directory matching this wildcard will cause a warning.
 exports.warnOn = '*';
@@ -11,15 +11,18 @@ exports.template = function(grunt, init, done){
 
   init.process({}, [
     // Prompt for these values
-    //  init.prompt('name'),
-    //  init.prompt('title'),
-    //  init.prompt('description'),
-    //  init.prompt('version')
+    init.prompt('name'),
+    init.prompt('title'),
+    init.prompt('description'),
+    init.prompt('version')
 
   ], function(err, props){
     // Files to copy (and process).
 
     var files = init.filesToCopy(props);
+
+    var renames = init.renames;
+    renames === { 'wp-content/themes/wp-myplay-store/': 'wp-content/themes/{%= name %}' };
 
     // Actually copy (and process) files.
     init.copyAndProcess(files, props);
@@ -33,6 +36,9 @@ exports.template = function(grunt, init, done){
     //    "grunt-typescript": "~v0.6.x"
     //  }
     //});
+
+
+
 
     // All done!
     done();

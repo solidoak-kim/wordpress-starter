@@ -24,9 +24,6 @@ exports.template = function(grunt, init, done){
     // Actually copy (and process) files.
     init.copyAndProcess(files, props);
 
-    var renames = init.renames;
-    renames === { 'wp-content/themes/wp-myplay-store/': 'wp-content/themes/{%= name %}' };
-
     // Empty folders won't be copied over so make them here
     grunt.file.mkdir('wp');
 

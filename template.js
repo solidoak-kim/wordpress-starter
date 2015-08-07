@@ -27,6 +27,7 @@ exports.template = function(grunt, init, done){
         var path = files[file],
             newFile = file.replace('wp-myplay-store/', newThemeFolder + '/');
         files[newFile] = path;
+
         delete files[file];
       }
     }

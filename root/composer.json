@@ -6,7 +6,8 @@
     }
   ],
   "require": {
-    "johnpbloch/wordpress": "4.2"
+    "johnpbloch/wordpress": "4.2",
+    "wpackagist-plugin/timber": "dev-trunk"
   },
   "extra": {
     "wordpress-install-dir": "wp"

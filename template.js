@@ -18,8 +18,18 @@ exports.template = function(grunt, init, done){
 
   ], function(err, props){
     // Files to copy (and process).
+    var files = init.filesToCopy(props),
+        newThemeFolder = props.name;
 
-    var files = init.filesToCopy(props);
+    // Repath the files correctly
+    for (var file in files) {
+      if (file.indexOf('wp-myplay-store/') > -1) {
+        var path = files[file],
+            newFile = file.replace('wp-myplay-store/', newThemeFolder + '/');
+        files[newFile] = path;
+        delete files[file];
+      }
+    }
 
     // Actually copy (and process) files.
     init.copyAndProcess(files, props);

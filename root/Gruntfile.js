@@ -63,7 +63,8 @@ module.exports = function (grunt) {
       allFiles: ['./wp-content/themes/<%= pkg.name %>/styles/scss/*.scss'],
       options: {
         bundleExec: false,
-        colorizeOutput: true
+        colorizeOutput: true,
+        config: '.scss-lint.yml'
       }
     },
 

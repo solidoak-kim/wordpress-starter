@@ -39,7 +39,7 @@ exports.template = function(grunt, init, done){
     grunt.file.mkdir('wp');
 
     // Generate package.json file for npm and grunt
-    init.writePackage.JSON('package.json', {
+    init.writePackageJSON('package.json', {
       name: props.name,
       description: props.description,
       version: props.version,

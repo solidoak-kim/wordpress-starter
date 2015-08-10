@@ -21,6 +21,8 @@ module.exports = function (grunt) {
 
     wpThemeScriptsDir: '<%= wpThemeDir %>/scripts',
 
+    wpThemeVendorDir: '<%= wpThemeDir %>/vendor',
+
     watch: {
       options: {
         livereload: true
@@ -136,6 +138,18 @@ module.exports = function (grunt) {
           dest: '<%= wpThemeScriptsDir %>/js'
         }]
       }
+    },
+
+    // Concatenate Bower dependencies
+    bower_concat: {
+      all: {
+        dest: '<%= wpThemeVendorDir %>/vendor.js',
+        cssDest: '<%= wpThemeVendorDir %>/vendor.css',
+        exclude: ['jquery'],
+        bowerOptions: {
+          relative: false
+        }
+      }
     }
 
   });
@@ -148,9 +162,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-typescript');
   grunt.loadNpmTasks('grunt-scss-lint');
+  grunt.loadNpmTasks('grunt-bower-concat');
 
   // Register tasks
-  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'watch']);
+  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower_concat', 'watch']);
   grunt.registerTask('prod', ['compass:prod', 'jshint', 'scsslint', 'cssmin, uglify']);
 
 }

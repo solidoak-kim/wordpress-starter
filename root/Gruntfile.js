@@ -15,6 +15,12 @@ module.exports = function (grunt) {
 
     pkg: grunt.file.readJSON('package.json'),
 
+    wpThemeDir: './wp-content/themes/<%= pkg.name %>',
+
+    wpThemeStylesDir: '<%= wpThemeDir %>/styles',
+
+    wpThemeScriptsDir: '<%= wpThemeDir %>/scripts',
+
     watch: {
       options: {
         livereload: true
@@ -29,11 +35,11 @@ module.exports = function (grunt) {
         files: ['Gruntfile.js']
       },
       sass: {
-        files: ['./wp-content/themes/<%= pkg.name %>/styles/scss/*.scss'],
+        files: [ '<%= wpThemeStylesDir %>/scss/*.scss'],
         tasks: ['compass:dev']
       },
       scripts: {
-        files: ['./wp-content/themes/<%= pkg.name %>/scripts/js/*.js'],
+        files: ['<%= wpThemeScriptsDir %>/js/*.js'],
         tasks: ['jshint']
       }
     },
@@ -42,16 +48,16 @@ module.exports = function (grunt) {
     compass: {
       prod: {
         options: {
-          sassDir: ['./wp-content/themes/<%= pkg.name %>/styles/scss'],
-          cssDir: ['./wp-content/themes/<%= pkg.name %>/styles/css'],
+          sassDir: ['<%= wpThemeStylesDir %>/scss'],
+          cssDir: ['<%= wpThemeStylesDir %>/css'],
           environment: 'production'
         }
       },
       dev: {
         options: {
           noLineComments: true,
-          sassDir: ['./wp-content/themes/<%= pkg.name %>/styles/scss'],
-          cssDir: ['./wp-content/themes/<%= pkg.name %>/styles/css'],
+          sassDir: ['<%= wpThemeStylesDir %>/scss'],
+          cssDir: ['<%= wpThemeStyles %>/css'],
           sourcemap: true,
           environment: 'development'
         }
@@ -60,7 +66,7 @@ module.exports = function (grunt) {
 
     // SCSS lint task
     scsslint: {
-      allFiles: ['./wp-content/themes/<%= pkg.name %>/styles/scss/*.scss'],
+      allFiles: ['<%= wpThemeStylesDir %>/scss/*.scss'],
       options: {
         bundleExec: false,
         colorizeOutput: true,
@@ -68,11 +74,27 @@ module.exports = function (grunt) {
       }
     },
 
+    // minify CSS
+    cssmin: {
+      options: {
+        banner: banner
+      },
+      target: {
+        files: [{
+          expand: true,
+          cwd: '<%= wpThemeStylesDir %>/css',
+          src: ['<%= wpThemeStylesDir %>/css/*.css', '!*.min.css'],
+          dest: ['<%= wpThemeStylesDir %>/css'],
+          ext: '.min.css'
+        }]
+      }
+    },
+
     // Typescript tasks
     typescript: {
       base: {
-        src: ['./wp-content/themes/<%= pkg.name %>/scripts/typescript/*.ts'],
-        dest: './wp-content/themes/<%= pkg.name %>/scripts/js/',
+        src: ['<%= wpThemeScriptsDir %>/typescript/*.ts'],
+        dest: '<%= wpThemeScriptsDir %>/js/',
         options: {
           module: 'commonjs',
           target: 'es5',
@@ -85,7 +107,7 @@ module.exports = function (grunt) {
 
     // Javascript tasks
     jshint: {
-      files: ['./wp-content/themes/<%= pkg.name %>/scripts/js/*.js'],
+      files: ['<%= wpThemeScriptsDir %>/js/*.js'],
       options: {
         curly: true,
         eqeqeq: true,
@@ -95,7 +117,25 @@ module.exports = function (grunt) {
           jQuery: true
         }
       },
-      use_defaults: ['./wp-content/themes/<%= pkg.name %>/scripts/js/*.js']
+      use_defaults: ['<%= wpThemeScriptsDir %>/js/*.js']
+    },
+
+    // Uglify javascript files
+    uglify: {
+      options: {
+        banner: banner,
+        compress: {
+          drop_console: true
+        }
+      },
+      my_target: {
+        files: [{
+          expand: true,
+          cwd: '<%= wpThemeScriptsDir %>/js',
+          src: '<%= wpThemeScriptsDir %>/js/*.js',
+          dest: '<%= wpThemeScriptsDir %>/js'
+        }]
+      }
     }
 
   });
@@ -104,13 +144,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-jshint');
+  grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-typescript');
   grunt.loadNpmTasks('grunt-scss-lint');
 
   // Register tasks
   grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'watch']);
-
-  // TODO: grunt task to minify css, uglify js, concat files
-
+  grunt.registerTask('prod', ['compass:prod', 'jshint', 'scsslint', 'cssmin, uglify']);
 
 }

@@ -50,6 +50,7 @@ exports.template = function(grunt, init, done){
         "grunt-contrib-concat": "^0.5.1",
         "grunt-contrib-jshint": "^0.11.2",
         "grunt-contrib-uglify": "^0.9.1",
+        "grunt-contrib-cssmin": "^0.13.0",
         "grunt-typescript" : "~0.7.x",
         "grunt-bower-concat": "~0.5.x",
         "grunt-scss-lint": "^0.3.8"

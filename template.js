@@ -21,7 +21,7 @@ exports.template = function(grunt, init, done){
     var files = init.filesToCopy(props),
         newThemeFolder = props.name;
 
-    // Repath the files correctly
+    // Update file paths to reflect the name specified from prompt
     for (var file in files) {
       if (file.indexOf('wp-myplay-store/') > -1) {
         var path = files[file],
@@ -35,18 +35,25 @@ exports.template = function(grunt, init, done){
     // Actually copy (and process) files.
     init.copyAndProcess(files, props);
 
-    // Empty folders won't be copied over so make them here
+    // Empty folders won't be copied over create them
     grunt.file.mkdir('wp');
 
-    //  devDependencies: {
-    //    "grunt-contrib-watch": "~v0.6.x",
-    //    "grunt-contrib-stylus": "~v0.21.x",
-    //    "grunt-typescript": "~v0.6.x"
-    //  }
-    //});
-
-
-
+    // Generate package.json file for npm and grunt
+    init.writePackage.JSON('package.json', {
+      name: props.name,
+      description: props.description,
+      version: props.version,
+      devDependencies: {
+        "grunt": "^0.4.5",
+        "grunt-contrib-watch": "~0.6.x",
+        "grunt-contrib-compass": "~0.4.x",
+        "grunt-contrib-concat": "^0.5.1",
+        "grunt-contrib-jshint": "^0.11.2",
+        "grunt-contrib-uglify": "^0.9.1",
+        "grunt-typescript" : "~0.7.x",
+        "grunt-bower-concat": "~0.5.x"
+      }
+    });
 
     // All done!
     done();

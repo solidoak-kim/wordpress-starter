@@ -62,7 +62,7 @@ module.exports = function (grunt) {
     scsslint: {
       allFiles: ['./wp-content/themes/<%= pkg.name %>/styles/scss/*.scss'],
       options: {
-        bundleExec: true,
+        bundleExec: false,
         colorizeOutput: true
       }
     },
@@ -107,7 +107,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-scss-lint');
 
   // Register tasks
-  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint']);
+  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'watch']);
 
   // TODO: grunt task to minify css, uglify js, concat files
 

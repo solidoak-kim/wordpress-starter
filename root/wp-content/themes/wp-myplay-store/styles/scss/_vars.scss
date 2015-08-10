@@ -1,11 +1,11 @@
 // Define breakpoint ranges
-$small-range: (0px, 680px);
+$small-range: (0, 680px);
 $normal-range: (681px, 959px);
 $medium-range: (960px, 1279px);
 $large-range: (1280px, 1650px);
 
 // Media Queries
-$screen: "only screen" !default;
+$screen: 'only screen' !default;
 
 $small-up: $screen !default;
 $small-only: "#{$screen} and (max-width: #{upper-bound($small-range)})" !default;

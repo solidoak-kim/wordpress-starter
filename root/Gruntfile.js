@@ -58,6 +58,15 @@ module.exports = function (grunt) {
       }
     },
 
+    // SCSS lint task
+    scsslint: {
+      allFiles: ['./wp-content/themes/<%= pkg.name %>/styles/scss/*.scss'],
+      options: {
+        bundleExec: true,
+        colorizeOutput: true
+      }
+    },
+
     // Typescript tasks
     typescript: {
       base: {
@@ -95,9 +104,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-typescript');
+  grunt.loadNpmTasks('grunt-scss-lint');
 
   // Register tasks
-  grunt.registerTask('dev', ['compass:dev', 'jshint']);
+  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint']);
 
   // TODO: grunt task to minify css, uglify js, concat files
 

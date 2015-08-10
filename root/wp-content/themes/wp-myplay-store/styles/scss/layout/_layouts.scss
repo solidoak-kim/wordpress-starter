@@ -1,0 +1,51 @@
+/*
+@media #{$small-only}
+{
+
+}
+@media #{$small-up}
+{
+
+}
+@media #{$normal-only}
+{
+
+}
+@media #{$normal-up}
+{
+
+}
+@media #{$medium-only}
+{
+
+}
+@media #{$medium-up}
+{
+
+}
+@media #{$large-only}
+{
+
+}
+@media #{$large-up}
+{
+
+}
+*/
+
+.l-full-width {
+  width: 100%;
+}
+
+.l-fixed-top {
+  position: fixed;
+  top: 0;
+  right: auto;
+  bottom: auto;
+  left: 0;
+
+}
+
+.l-centered {
+  margin:0 auto;
+}

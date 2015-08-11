@@ -166,7 +166,7 @@ module.exports = function (grunt) {
             src: ['**'],
             dest: '<%= wpPluginsDir %>/'
           }
-        ],
+        ]
       }
     }
 

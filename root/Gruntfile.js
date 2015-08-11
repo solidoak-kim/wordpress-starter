@@ -17,6 +17,8 @@ module.exports = function (grunt) {
 
     wpThemeDir: './wp-content/themes/<%= pkg.name %>',
 
+    wpPluginsDir: './wp-content/plugins',
+
     wpThemeStylesDir: '<%= wpThemeDir %>/styles',
 
     wpThemeScriptsDir: '<%= wpThemeDir %>/scripts',
@@ -152,6 +154,14 @@ module.exports = function (grunt) {
           relative: false
         }
       }
+    },
+
+    // Copy from Vendor(Composer dependencies) into the wordpress plugins directory
+    copy: {
+      vendor: {
+        src: 'vendor/rgenerator/*',
+        dest: '<%= wpPluginsDir %>'
+      }
     }
 
   });
@@ -163,12 +173,13 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-typescript');
   grunt.loadNpmTasks('grunt-scss-lint');
   grunt.loadNpmTasks('grunt-bower-concat');
 
   // Register tasks
-  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower_concat', 'watch']);
+  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower_concat', 'copy:vendor', 'watch']);
   grunt.registerTask('prod', ['compass:prod', 'jshint', 'scsslint', 'cssmin, uglify']);
 
 }

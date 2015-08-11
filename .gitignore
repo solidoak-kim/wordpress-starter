@@ -6,3 +6,4 @@ wp-config.sample
 wp-config.php
 node_modules
 bower_components
+.sass-cache

@@ -21,7 +21,7 @@ module.exports = function (grunt) {
 
     wpThemeScriptsDir: '<%= wpThemeDir %>/scripts',
 
-    wpThemeVendorDir: '<%= wpThemeDir %>/vendor',
+    wpThemeLibDir: '<%= wpThemeDir %>/lib',
 
     watch: {
       options: {
@@ -144,13 +144,26 @@ module.exports = function (grunt) {
     bower: {
       install: {
         options: {
-          targetDir: '<%= wpThemeVendorDir %>',
-          layout: 'byComponent',
+          targetDir: '<%= wpThemeLibDir %>',
+          layout: 'byType',
           install: true,
           verbose: false,
           cleanTargetDir: false,
           cleanBowerDir: false,
           bowerOptions: {}
+        }
+      }
+    },
+
+    // Compress Bower components
+    concat: {
+      options: {
+        separator: ';'
+      },
+      lib: {
+        files: {
+          '<%= wpThemeLibDir %>/js/libs.js': ['<%= wpThemeLibDir %>/js/*.js'],
+          '<%= wpThemeLibDir %>/css/libs.css': ['<%= wpThemeLibDir %>/css/*.css']
         }
       }
     }
@@ -168,7 +181,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-bower-task');
 
   // Register tasks
-  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower', 'watch']);
+  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower', 'concat', 'watch']);
   grunt.registerTask('prod', ['compass:prod', 'jshint', 'scsslint', 'cssmin, uglify']);
 
 }

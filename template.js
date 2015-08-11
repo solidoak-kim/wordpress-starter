@@ -37,7 +37,7 @@ exports.template = function(grunt, init, done){
 
     // Empty folders won't be copied over create them
     grunt.file.mkdir('wp');
-    grunt.file.mkdir('wp-content/themes/' + props.name + '/vendor');
+    grunt.file.mkdir('wp-content/themes/' + props.name + '/lib');
     grunt.file.mkdir('wp-content/themes/' + props.name + '/styles/css');
     grunt.file.mkdir('wp-content/themes/' + props.name + '/scripts/js');
 

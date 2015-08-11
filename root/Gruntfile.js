@@ -159,8 +159,13 @@ module.exports = function (grunt) {
     // Copy from Vendor(Composer dependencies) into the wordpress plugins directory
     copy: {
       vendor: {
-        src: 'vendor/rgenerator/*',
-        dest: '<%= wpPluginsDir %>'
+        files: [
+          {
+            expand: true,
+            src: ['./vendor/rgenerator/**'],
+            dest: '<%= wpPluginsDir %>/'
+          }
+        ],
       }
     }
 

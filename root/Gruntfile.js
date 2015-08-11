@@ -168,7 +168,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-bower-task');
 
   // Register tasks
-  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower:install', 'watch']);
+  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower', 'watch']);
   grunt.registerTask('prod', ['compass:prod', 'jshint', 'scsslint', 'cssmin, uglify']);
 
 }

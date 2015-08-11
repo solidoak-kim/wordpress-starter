@@ -1,8 +1,8 @@
 # Created by .ignore support plugin (hsz.mobi)
 .idea
-root/wp
-root/wp-content/plugins
-root/wp-config.sample
-root/wp-config.php
-root/wp-content/themes/**/node_modules
-root/wp-content/themes/**/bower_components
+wp
+wp-content/plugins
+wp-config.sample
+wp-config.php
+node_modules
+bower_components

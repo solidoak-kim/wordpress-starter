@@ -145,7 +145,7 @@ module.exports = function (grunt) {
       install: {
         options: {
           targetDir: '<%= wpThemeLibDir %>',
-          layout: 'byType',
+          layout: 'byComponent',
           install: true,
           verbose: false,
           cleanTargetDir: false,
@@ -162,8 +162,8 @@ module.exports = function (grunt) {
       },
       lib: {
         files: {
-          '<%= wpThemeLibDir %>/js/libs.js': ['<%= wpThemeLibDir %>/js/*.js'],
-          '<%= wpThemeLibDir %>/css/libs.css': ['<%= wpThemeLibDir %>/css/*.css']
+          '<%= wpThemeLibDir %>/libs.js': ['<%= wpThemeLibDir %>/js/*.js'],
+          '<%= wpThemeLibDir %>/libs.css': ['<%= wpThemeLibDir %>/css/*.css']
         }
       }
     }

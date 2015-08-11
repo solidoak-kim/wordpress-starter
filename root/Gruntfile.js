@@ -59,7 +59,7 @@ module.exports = function (grunt) {
         options: {
           noLineComments: true,
           sassDir: ['<%= wpThemeStylesDir %>/scss'],
-          cssDir: ['<%= wpThemeStyles %>/css'],
+          cssDir: ['<%= wpThemeStylesDir %>/css'],
           sourcemap: true,
           environment: 'development'
         }

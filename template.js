@@ -37,6 +37,7 @@ exports.template = function(grunt, init, done){
 
     // Empty folders won't be copied over create them
     grunt.file.mkdir('wp');
+    grunt.file.mkdir('wp-content/themes/' + props.name + '/vendor');
 
     // Generate package.json file for npm and grunt
     init.writePackageJSON('package.json', {

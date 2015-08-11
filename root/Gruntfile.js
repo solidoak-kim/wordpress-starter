@@ -140,21 +140,6 @@ module.exports = function (grunt) {
       }
     },
 
-    // Install Bower
-    bower: {
-      install: {
-        options: {
-          targetDir: '<%= wpThemeLibDir %>',
-          layout: 'byComponent',
-          install: true,
-          verbose: false,
-          cleanTargetDir: false,
-          cleanBowerDir: false,
-          bowerOptions: {}
-        }
-      }
-    },
-
     // Concat Bower components
     bower_concat: {
       all: {

@@ -162,7 +162,8 @@ module.exports = function (grunt) {
         files: [
           {
             expand: true,
-            src: ['./vendor/rgenerator/**'],
+            cwd: './vendor/rgenerator/',
+            src: ['**'],
             dest: '<%= wpPluginsDir %>/'
           }
         ],

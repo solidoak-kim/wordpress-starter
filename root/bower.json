@@ -1,10 +1,9 @@
 {
   "name" : "{%= name %}",
   "description": "{%= description %}",
-  "version": "{%= version %}",
   "dependencies": {
-    "gsap": "1.17.0",
-    "js-logger": "1.1.1"
+    "gsap": "~1.17.0",
+    "js-logger": "~1.1.1"
   },
   "authors" : "RGenerator",
   "private": true

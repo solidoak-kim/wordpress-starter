@@ -165,7 +165,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-typescript');
   grunt.loadNpmTasks('grunt-scss-lint');
-  grunt.loadNpmTasks('grunt-bower-concat');
+  grunt.loadNpmTasks('grunt-bower-task');
 
   // Register tasks
   grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower:install', 'watch']);

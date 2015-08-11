@@ -140,14 +140,17 @@ module.exports = function (grunt) {
       }
     },
 
-    // Concatenate Bower dependencies
-    bower_concat: {
-      all: {
-        dest: '<%= wpThemeVendorDir %>/vendor.js',
-        cssDest: '<%= wpThemeVendorDir %>/vendor.css',
-        exclude: ['jquery'],
-        bowerOptions: {
-          relative: false
+    // Install Bower
+    bower: {
+      install: {
+        options: {
+          targetDir: '<%= wpThemeVendorDir %>',
+          layout: 'byComponent',
+          install: true,
+          verbose: false,
+          cleanTargetDir: false,
+          cleanBowerDir: false,
+          bowerOptions: {}
         }
       }
     }
@@ -165,7 +168,7 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-bower-concat');
 
   // Register tasks
-  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower_concat', 'watch']);
+  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower:install', 'watch']);
   grunt.registerTask('prod', ['compass:prod', 'jshint', 'scsslint', 'cssmin, uglify']);
 
 }

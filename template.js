@@ -55,7 +55,7 @@ exports.template = function(grunt, init, done){
         "grunt-contrib-uglify": "^0.9.1",
         "grunt-contrib-cssmin": "^0.13.0",
         "grunt-typescript" : "~0.7.x",
-        "grunt-bower-task": "^0.4.0",
+        "grunt-bower-concat": "^0.5.0",
         "grunt-scss-lint": "^0.3.8"
       }
     });

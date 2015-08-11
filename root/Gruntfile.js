@@ -155,15 +155,16 @@ module.exports = function (grunt) {
       }
     },
 
-    // Compress Bower components
-    concat: {
-      options: {
-        separator: ';'
-      },
-      lib: {
-        files: {
-          '<%= wpThemeLibDir %>/libs.js': ['<%= wpThemeLibDir %>/js/*.js'],
-          '<%= wpThemeLibDir %>/libs.css': ['<%= wpThemeLibDir %>/css/*.css']
+    // Concat Bower components
+    bower_concat: {
+      all: {
+        dest: '<%= wpThemeLibDir %>/libs.js',
+        cssDest: '<%= wpThemeLibDir %>/libs.css',
+        exclude: ['jquery'],
+        dependencies: {
+        },
+        bowerOptions: {
+          relative: false
         }
       }
     }
@@ -179,10 +180,10 @@ module.exports = function (grunt) {
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-typescript');
   grunt.loadNpmTasks('grunt-scss-lint');
-  grunt.loadNpmTasks('grunt-bower-task');
+  grunt.loadNpmTasks('grunt-bower-concat');
 
   // Register tasks
-  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower', 'concat', 'watch']);
+  grunt.registerTask('dev', ['compass:dev', 'jshint', 'scsslint', 'bower_concat', 'watch']);
   grunt.registerTask('prod', ['compass:prod', 'jshint', 'scsslint', 'cssmin, uglify']);
 
 }

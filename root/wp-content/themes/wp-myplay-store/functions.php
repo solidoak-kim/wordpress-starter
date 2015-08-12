@@ -260,7 +260,7 @@ function _rgnrtrAdminBarLogo() {
 	$wp_admin_bar->add_menu( array(
 		'parent' => false, // use 'false' for a root menu, or pass the ID of the parent menu
 		'id'     => 'rg_logo', // link ID, defaults to a sanitized title value
-		'title'  => '<img style="margin-top:4px;width: 16px;height: 16px;" src="' . get_template_directory_uri() . '/images/wp_menu_icon.png" />',
+		'title'  => '<img style="margin-top:4px;width: 16px;height: 16px;" src="' . get_template_directory_uri() . '/images/myplay-icon-wp-menu.png" />',
 		'href'   => false,
 		'meta'   => false
 	) );

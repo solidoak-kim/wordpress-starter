@@ -40,7 +40,7 @@ module.exports = function (grunt) {
       },
       sass: {
         files: [ '<%= wpThemeStylesDir %>/scss/*.scss'],
-        tasks: ['compass:dev']
+        tasks: ['compass:dev', 'sasslint']
       },
       scripts: {
         files: ['<%= wpThemeScriptsDir %>/js/*.js'],

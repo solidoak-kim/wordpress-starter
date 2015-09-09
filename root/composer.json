@@ -6,7 +6,7 @@
     }
   ],
   "require": {
-    "johnpbloch/wordpress": "4.2.4",
+    "johnpbloch/wordpress": "4.2.*",
     "wpackagist-plugin/timber-library": "dev-trunk"
   },
   "extra": {

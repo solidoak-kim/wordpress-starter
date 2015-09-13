@@ -50,7 +50,7 @@ exports.template = function(grunt, init, done){
 
     // Generate package.json file for npm and grunt
     init.writePackageJSON('package.json', {
-      name: props.name,
+      name:  props.name.indexOf('wp-') !== 0 ? 'wp-' + props.name : props.name,
       description: props.description,
       version: props.version,
       devDependencies: {

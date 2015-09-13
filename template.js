@@ -21,7 +21,7 @@ exports.template = function(grunt, init, done){
     init.prompt('name'),
     init.prompt('title'),
     init.prompt('description'),
-    init.prompt('version')
+    init.prompt('version', 'v0.0.1')
   ], function(err, props){
 
     // Files to copy (and process).

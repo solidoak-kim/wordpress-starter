@@ -1,5 +1,12 @@
 'use strict';
 
+function git(argv) {
+  // Don't let git's output interfere with grunt logging
+  var output = {stdio: [0, null, null]};
+  var exec = require('child_process').execSync;
+  exec('git ' + argv,  output);
+}
+
 // Basic template description
 exports.description = 'Scaffolds a new M2 WordPress starter theme with GruntJS, Compass and Typescript';
 
@@ -14,9 +21,11 @@ exports.template = function(grunt, init, done){
     init.prompt('name'),
     init.prompt('title'),
     init.prompt('description'),
-    init.prompt('version')
-
+    init.prompt('version', 'v0.0.1')
   ], function(err, props){
+
+    props.name = props.name.indexOf('wp-') !== 0 ? 'wp-' + props.name : props.name;
+
     // Files to copy (and process).
     var files = init.filesToCopy(props),
         newThemeFolder = props.name;
@@ -64,5 +73,16 @@ exports.template = function(grunt, init, done){
     // All done!
     done();
 
-  });
+    try {
+      grunt.log.write('\nInitializing Git repository...');
+      git('init -q');
+      git('add .');
+      git('remote add origin git@github.com:rgenerator/' + props.name + '.git')
+      grunt.log.ok();
+    }
+    catch(e) {
+      grunt.log.writeln();
+      grunt.fail.warn('git initialization failed: ' + e.message);
+    }
+  })
 };

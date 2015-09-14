@@ -24,6 +24,8 @@ exports.template = function(grunt, init, done){
     init.prompt('version', 'v0.0.1')
   ], function(err, props){
 
+    props.name = props.name.indexOf('wp-') !== 0 ? 'wp-' + props.name : props.name;
+
     // Files to copy (and process).
     var files = init.filesToCopy(props),
         newThemeFolder = props.name;
@@ -50,7 +52,7 @@ exports.template = function(grunt, init, done){
 
     // Generate package.json file for npm and grunt
     init.writePackageJSON('package.json', {
-      name:  props.name.indexOf('wp-') !== 0 ? 'wp-' + props.name : props.name,
+      name: props.name,
       description: props.description,
       version: props.version,
       devDependencies: {

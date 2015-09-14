@@ -75,8 +75,9 @@ exports.template = function(grunt, init, done){
 
     try {
       grunt.log.write('\nInitializing Git repository...');
-      git('init');
+      git('init -q');
       git('add .');
+      git('remote add origin git@github.com:rgenerator/' + props.name + '.git')
       grunt.log.ok();
     }
     catch(e) {
